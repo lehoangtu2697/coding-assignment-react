@@ -1,3 +1,5 @@
+https://github.com/lehoangtu2697/coding-assignment-react/assets/49048722/db7196ad-b22d-4bc6-b972-04a6298fcc7d
+
 # Coding assignment
 
 The goal of this assignment is to showcase your ability to develop features and your coding style. Due to the time
