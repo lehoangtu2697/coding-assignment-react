@@ -24,16 +24,17 @@ export function Tickets({ tickets, users, fetchTickets }: TicketsProps) {
         if (assigneeId) {
           assignUserToTicket(id, assigneeId)
             .then(() => {
-              successNotify('Ticket assigned successfully');
+              successNotify('Ticket created successfully');
+              fetchTickets();
             })
             .catch((error) => {
               console.error('Failed to assign user:', error);
               errorNotify('Failed to assign user');
             });
+        } else {
+          successNotify('Ticket created successfully');
+          fetchTickets();
         }
-
-        successNotify('Ticket created successfully');
-        fetchTickets();
       })
       .catch((error) => {
         console.error('Failed to create ticket:', error);

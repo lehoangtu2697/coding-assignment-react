@@ -7,6 +7,8 @@ import {
   Lookup,
   GroupPanel,
   Editing,
+  Paging,
+  Pager,
 } from 'devextreme-react/data-grid';
 import { Switch } from 'antd';
 
@@ -35,6 +37,14 @@ export function ListTickets({
           onAssignUserToTicket(`${data.id}`, data.assigneeId);
         }}
       >
+        <Paging defaultPageSize={10} />
+        <Pager
+          visible={true}
+          allowedPageSizes={[5, 10, 'all']}
+          showPageSizeSelector={true}
+          showInfo={true}
+          showNavigationButtons={true}
+        />
         <GroupPanel visible={true} />
         <HeaderFilter visible={true} />
         <Editing mode="cell" allowUpdating={true} />
