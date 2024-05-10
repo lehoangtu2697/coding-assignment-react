@@ -1,25 +1,99 @@
-import { Ticket } from '@acme/shared-models';
+import { Ticket, User } from '@acme/shared-models';
 import styles from './tickets.module.css';
+import CreateTicket from '../createTicket/createTicket';
+import ListTickets from '../listTickets/listTickets';
+import {
+  createNewTicket,
+  assignUserToTicket,
+  unassignUserFromTicket,
+  markTicketAsComplete,
+  markTicketAsIncomplete,
+} from '../api/ticket';
+import { successNotify, errorNotify } from '../utils/notify';
 
 export interface TicketsProps {
   tickets: Ticket[];
+  users: User[];
+  fetchTickets: () => void;
 }
 
-export function Tickets(props: TicketsProps) {
+export function Tickets({ tickets, users, fetchTickets }: TicketsProps) {
+  const onCreateTicket = (description: string, assigneeId?: string) => {
+    createNewTicket(description)
+      .then(({ id }) => {
+        if (assigneeId) {
+          assignUserToTicket(id, assigneeId)
+            .then(() => {
+              successNotify('Ticket assigned successfully');
+            })
+            .catch((error) => {
+              console.error('Failed to assign user:', error);
+              errorNotify('Failed to assign user');
+            });
+        }
+
+        successNotify('Ticket created successfully');
+        fetchTickets();
+      })
+      .catch((error) => {
+        console.error('Failed to create ticket:', error);
+        errorNotify('Failed to create ticket');
+      });
+  };
+
+  const onAssignUserToTicket = (
+    ticketId: string,
+    assigneeId: number | null
+  ) => {
+    if (assigneeId !== null) {
+      console.log('A', assigneeId);
+      assignUserToTicket(ticketId, `${assigneeId}`)
+        .then(() => {
+          successNotify('Successfully to assigned ticket');
+        })
+        .catch((error) => {
+          console.error('Failed to assign ticket:', error);
+          errorNotify('Failed to assign ticket');
+        });
+    } else {
+      console.log('B', assigneeId);
+      unassignUserFromTicket(ticketId)
+        .then(() => {
+          successNotify('Successfully to unassigned ticket');
+        })
+        .catch((error) => {
+          console.error('Failed to unassign ticket:', error);
+          errorNotify('Failed to unassign ticket');
+        });
+    }
+  };
+
+  const onChangeTicketStatus = (checked: boolean, ticketId: string) => {
+    const apiChangeTicketStatus = checked
+      ? markTicketAsComplete
+      : markTicketAsIncomplete;
+
+    apiChangeTicketStatus(ticketId)
+      .then(() => {
+        successNotify('Successfully to changed ticket status');
+      })
+      .catch((error) => {
+        console.error('Failed to change ticket status:', error);
+        errorNotify('Failed to change ticket status');
+      });
+  };
+
   return (
     <div className={styles['tickets']}>
       <h2>Tickets</h2>
-      {props.tickets ? (
-        <ul>
-          {props.tickets.map((t) => (
-            <li key={t.id}>
-              Ticket: {t.id}, {t.description}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <span>...</span>
-      )}
+      <CreateTicket users={users} onCreateTicket={onCreateTicket} />
+
+      <ListTickets
+        tickets={tickets}
+        users={users}
+        onAssignUserToTicket={onAssignUserToTicket}
+        onChangeTicketStatus={onChangeTicketStatus}
+      />
     </div>
   );
 }

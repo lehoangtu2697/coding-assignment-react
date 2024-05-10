@@ -1,10 +1,21 @@
 import { render } from '@testing-library/react';
+import Tickets, { TicketsProps } from './tickets';
 
-import Tickets from './tickets';
+const mockFetchTickets = jest.fn();
 
-describe('Tickets', () => {
+const mockProps: TicketsProps = {
+  tickets: [],
+  users: [],
+  fetchTickets: mockFetchTickets,
+};
+
+describe('Tickets Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should render successfully', () => {
-    const { baseElement } = render(<Tickets tickets={[]} />);
-    expect(baseElement).toBeTruthy();
+    const { getByText } = render(<Tickets {...mockProps} />);
+    expect(getByText('Tickets')).toBeInTheDocument();
   });
 });

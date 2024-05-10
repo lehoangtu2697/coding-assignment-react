@@ -1,0 +1,11 @@
+.create-ticket {
+    position: absolute;
+    right: 20px;
+    z-index: 100;
+}
+.footer-modal{
+ text-align: right;
+}
+.btn-cancel{
+    margin-right: 10px;
+}

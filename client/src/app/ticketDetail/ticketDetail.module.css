@@ -1,0 +1,18 @@
+.ticket-detail {
+    display: flex;
+    flex-direction: column;
+    button {
+        width: 150px;
+        margin-bottom: 30px;
+    }
+}
+  
+  .ticket-info {
+    display: flex;
+    padding: 20px;
+}
+  
+  .column {
+    flex: 1;
+}
+  
