@@ -14,7 +14,6 @@ export function TicketDetail() {
       const response = await fetch(`/api/tickets/${ticketId}`);
       const data = await response.json();
       setTicket(data);
-      console.log('ticket', data);
       return data;
     }
     return null;
@@ -24,7 +23,6 @@ export function TicketDetail() {
     if (userId) {
       const response = await fetch(`/api/users/${userId}`);
       const data = await response.json();
-      console.log('user', data);
       setUser(data);
     }
   }, []);

@@ -34,8 +34,6 @@ export async function assignUserToTicket(ticketId: string, userId: string) {
       if (response.status !== 204) {
         throw new Error('Failed to assign user to ticket');
       }
-  
-      console.log('User assigned to ticket successfully');
     } catch (error) {
       console.error('Error assigning user to ticket:', error);
       throw error;
@@ -53,8 +51,6 @@ export async function unassignUserFromTicket(ticketId: string) {
       if (response.status !== 204) {
         throw new Error('Failed to unassign user from ticket');
       }
-  
-      console.log('User unassigned from ticket successfully');
     } catch (error) {
       console.error('Error unassign user from ticket:', error);
       throw error;
@@ -72,8 +68,6 @@ export async function markTicketAsComplete(ticketId: string) {
     if (response.status !== 204) {
       throw new Error('Failed to mark ticket as complete');
     }
-
-    console.log('Ticket marked as complete successfully');
   } catch (error) {
     console.error('Error marking ticket as complete:', error);
     throw error;
@@ -91,8 +85,6 @@ export async function markTicketAsIncomplete(ticketId: string) {
     if (response.status !== 204) {
       throw new Error('Failed to mark ticket as incomplete');
     }
-
-    console.log('Ticket marked as incomplete successfully');
   } catch (error) {
     console.error('Error marking ticket as incomplete:', error);
     throw error;

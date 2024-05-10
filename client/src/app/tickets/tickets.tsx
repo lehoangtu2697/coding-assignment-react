@@ -47,7 +47,6 @@ export function Tickets({ tickets, users, fetchTickets }: TicketsProps) {
     assigneeId: number | null
   ) => {
     if (assigneeId !== null) {
-      console.log('A', assigneeId);
       assignUserToTicket(ticketId, `${assigneeId}`)
         .then(() => {
           successNotify('Successfully to assigned ticket');
@@ -57,7 +56,6 @@ export function Tickets({ tickets, users, fetchTickets }: TicketsProps) {
           errorNotify('Failed to assign ticket');
         });
     } else {
-      console.log('B', assigneeId);
       unassignUserFromTicket(ticketId)
         .then(() => {
           successNotify('Successfully to unassigned ticket');
